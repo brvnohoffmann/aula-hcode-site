@@ -1,28 +1,64 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <BudeHeader v-on:select-champ="changeChamp" 
+                v-on:change-component="changeComponent"
+    />
+
+    <BudeSection v-bind:champ="champ" 
+                 v-bind:current-component="currentSectionComponent"/>
+    
+    <BudeFooter />
+
+    
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import BudeHeader from './components/BudeHeader.vue'
+import BudeFooter from './components/BudeFooter.vue'
+import BudeSection from './components/BudeSection.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    BudeHeader,
+    BudeFooter,
+    BudeSection
+  },
+  data() {
+    return {
+      champ: 'Campeonato Brasileiro',
+      currentSectionComponent: 'BudeSectionBanner'
+    }
+  },
+  methods: {
+    changeChamp(value){
+      this.champ = value
+    },
+
+    changeComponent(value){
+
+      let component;
+
+      switch(value){
+        case 'home':
+        default:
+          component = 'BudeSectionBanner'
+          break;
+
+        case 'news':
+          component = 'BudeSectionNews'
+          break;
+      }
+
+      this.currentSectionComponent = component
+    }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
+@import url('https://fonts.googleapis.com/css?family=Rajdhani&display=swap');
+
+
 </style>
